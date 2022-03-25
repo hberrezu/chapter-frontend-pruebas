@@ -1,0 +1,90 @@
+<div class="container">
+    <div class="container_search-edit-container">
+        <div class="container__character-search-container">
+            <div class="container__search-title">
+                Listado de Personajes
+            </div>
+            <div class="container__search-button">
+                <input  (keyup)="applyFilter($event)" type="text" id="fname" name="fname" placeholder="🔎 Buscar">
+            </div>
+            <div class="container__new-button">
+                <button type="button">+ Nuevo</button>
+            </div>
+            <div class="container__image-container">
+               <div *ngIf="!selectedCharacter">Selecciona un caracter</div>
+               <img *ngIf="selectedCharacter" [src]="selectedCharacter?.image" width="100%" height="100%"/>
+               <div class="container__new-button">
+                   
+                <button [attr.disabled]="selectedCharacter ? null : true" (click)="deleteCharacterById(selectedCharacter._id)" type="button">Borrar</button>
+            </div>
+            </div>
+        </div>
+
+            <form [formGroup]="form" (ngSubmit)="addCharacter()" class="container__character-new-container">
+                <div class="container__search-title">
+                    Lista de Personajes
+                </div>
+                <div class="container__search-button">
+                    <input (keyup)="applyFilter($event)" type="text" id="fname" name="fname" placeholder="🔎 Buscar">
+                </div>
+                <div class="container__new-button">
+                    <button type="button">+ Nuevo</button>
+                </div>
+                <div class="container__new-movie-character">
+                    <div>
+                        <div class="container__search-title center-title">Nuevo Personaje</div>
+                    </div>
+                    <div>
+                        <div>
+                            Nombre:
+                        </div>
+                        <div>
+                            <input type="text" autocomplete="off" formControlName="name">
+                        </div>
+                    </div>
+                    <div>
+                        Description
+                        <div>
+                            <textarea type="textarea" formControlName="description">Descripcion</textarea>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            Imagen:
+                        </div>
+                        <div>
+                            <input type="text" autocomplete="off" formControlName="image">
+                        </div>
+                    </div>
+                    <div class="container__actions-container">
+                        <div>
+                            <button [disabled]="form.invalid" type="submit">+ Guardar</button>
+                        </div>
+                        <div>
+                            <button type="button">x Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+    </div>
+    
+
+    <div class="container__character-list-container">
+        <ng-container *ngIf="charactersFiltering.length > 0">
+            <div *ngFor="let character of charactersFiltering ">
+                <div class="container__card-movie">
+                    <div class="container__image-container" (click)="getCharacterByTitle(character.title)">
+                        <img [src]="character.image" width="100%" height="100%"/>
+                        <div>{{character.title}}</div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="charactersFiltering.length === 0">
+            Personaje no encontrado 😔!!!
+        </ng-container>
+        
+    </div>
+</div>
